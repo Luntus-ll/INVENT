@@ -19,10 +19,12 @@ void addItem(string name, string type, int level) {
         inventory[itemCount].level = level;
         itemCount++;
         cout << "Добавлен: " << name << "\n";
-    } else {
+    }
+    else {
         cout << "Инвентарь полон!\n";
     }
 }
+
 void removeItem(string name) {
     for (int i = 0; i < itemCount; i++) {
         if (inventory[i].name == name) {
@@ -38,23 +40,46 @@ void removeItem(string name) {
 }
 
 void printInventory() {
-    cout << "\n--- Èíâåíòàðü (" << itemCount << ") ---\n";
+    cout << "\n--- ИНВЕНТАРЬ (" << itemCount << ") ---\n";
     for (int i = 0; i < itemCount; i++) {
         cout << inventory[i].name << " | "
             << inventory[i].type << " | "
             << inventory[i].level << "\n";
     }
 }
-int main(){
-    setlocale(LC_ALL ," ")
-    addItem("Ìå÷", "îðóæèå", 10);
-    addItem("Ùèò", "áðîíÿ", 5);
-    addItem("Çåëüå", "çåëüå", 1);
-    addItem("Ëóê", "îðóæèå", 8);
-    addItem("Øëåì", "áðîíÿ", 3);
+
+void sortByLevel() {
+    for (int i = 0; i < itemCount - 1; i++) {
+        for (int j = 0; j < itemCount - i - 1; j++) {
+            if (inventory[j].level > inventory[j + 1].level) {
+                Item temp = inventory[j];
+                inventory[j] = inventory[j + 1];
+                inventory[j + 1] = temp;
+            }
+        }
+    }
+    cout << "Отсортировано по уровню\n";
+}
+
+void filterByType(string type) {
+    cout << "\n--- " << type << " ---\n";
+    for (int i = 0; i < itemCount; i++) {
+        if (inventory[i].type == type) {
+            cout << inventory[i].name << " | " << inventory[i].level << "\n";
+        }
+    }
+}
+
+int main() {
+    setlocale(LC_ALL, "RUS");
+    addItem("Меч", "оружие", 10);
+    addItem("Щит", "броня", 5);
+    addItem("Зелье", "зелье", 1);
+    addItem("Лук", "оружие", 8);
+    addItem("Шлем", "броня", 3);
 
     while (true) {
-        cout << "\n1. Äîáàâèòü 2. Óäàëèòü 3. Ïîêàçàòü 4. Ñîðòèðîâàòü 5. Ôèëüòð 0. Âûõîä\n";
+        cout << "\n1. Добавить 2. Удалить 3. Показать 4. Сортировать 5. Фильтр 0. Выход\n";
         int choice;
         cin >> choice;
 
@@ -63,14 +88,14 @@ int main(){
         if (choice == 1) {
             string name, type;
             int level;
-            cout << "Íàçâàíèå: "; cin >> name;
-            cout << "Òèï: "; cin >> type;
-            cout << "Óðîâåíü: "; cin >> level;
+            cout << "Название: "; cin >> name;
+            cout << "Тип: "; cin >> type;
+            cout << "Уровень: "; cin >> level;
             addItem(name, type, level);
         }
         else if (choice == 2) {
             string name;
-            cout << "Íàçâàíèå äëÿ óäàëåíèÿ: "; cin >> name;
+            cout << "Название для удаления: "; cin >> name;
             removeItem(name);
         }
         else if (choice == 3) {
@@ -82,10 +107,9 @@ int main(){
         }
         else if (choice == 5) {
             string type;
-            cout << "Òèï äëÿ ôèëüòðà: "; cin >> type;
+            cout << "Тип для фильтра: "; cin >> type;
             filterByType(type);
         }
     }
     return 0;
-
 }
