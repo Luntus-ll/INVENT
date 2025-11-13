@@ -12,24 +12,49 @@ const int MAX_ITEMS = 100;
 Item inventory[MAX_ITEMS];
 int itemCount = 0;
 
+void addItem(string name, string type, int level) {
+    if (itemCount < MAX_ITEMS) {
+        inventory[itemCount].name = name;
+        inventory[itemCount].type = type;
+        inventory[itemCount].level = level;
+        itemCount++;
+        cout << "Ð”Ð¾Ð±Ð°Ð²Ð»ÐµÐ½: " << name << "\n";
+    } else {
+        cout << "Ð˜Ð½Ð²ÐµÐ½Ñ‚Ð°Ñ€ÑŒ Ð¿Ð¾Ð»Ð¾Ð½!\n";
+    }
+}
+void removeItem(string name) {
+    for (int i = 0; i < itemCount; i++) {
+        if (inventory[i].name == name) {
+            for (int j = i; j < itemCount - 1; j++) {
+                inventory[j] = inventory[j + 1];
+            }
+            itemCount--;
+            cout << "Ð£Ð´Ð°Ð»ÐµÐ½: " << name << "\n";
+            return;
+        }
+    }
+    cout << "ÐÐµ Ð½Ð°Ð¹Ð´ÐµÐ½: " << name << "\n";
+}
+
 void printInventory() {
-    cout << "\n--- Èíâåíòàðü (" << itemCount << ") ---\n";
+    cout << "\n--- ÃˆÃ­Ã¢Ã¥Ã­Ã²Ã Ã°Ã¼ (" << itemCount << ") ---\n";
     for (int i = 0; i < itemCount; i++) {
         cout << inventory[i].name << " | "
             << inventory[i].type << " | "
             << inventory[i].level << "\n";
     }
-    cout << "-----------------------\n";
 }
-int main() {
-    addItem("Ìå÷", "îðóæèå", 10);
-    addItem("Ùèò", "áðîíÿ", 5);
-    addItem("Çåëüå", "çåëüå", 1);
-    addItem("Ëóê", "îðóæèå", 8);
-    addItem("Øëåì", "áðîíÿ", 3);
+int main(){
+    setlocale(LC_ALL ," ")
+    addItem("ÃŒÃ¥Ã·", "Ã®Ã°Ã³Ã¦Ã¨Ã¥", 10);
+    addItem("Ã™Ã¨Ã²", "Ã¡Ã°Ã®Ã­Ã¿", 5);
+    addItem("Ã‡Ã¥Ã«Ã¼Ã¥", "Ã§Ã¥Ã«Ã¼Ã¥", 1);
+    addItem("Ã‹Ã³Ãª", "Ã®Ã°Ã³Ã¦Ã¨Ã¥", 8);
+    addItem("Ã˜Ã«Ã¥Ã¬", "Ã¡Ã°Ã®Ã­Ã¿", 3);
 
     while (true) {
-        cout << "\n1. Äîáàâèòü 2. Óäàëèòü 3. Ïîêàçàòü 4. Ñîðòèðîâàòü 5. Ôèëüòð 0. Âûõîä\n";
+        cout << "\n1. Ã„Ã®Ã¡Ã Ã¢Ã¨Ã²Ã¼ 2. Ã“Ã¤Ã Ã«Ã¨Ã²Ã¼ 3. ÃÃ®ÃªÃ Ã§Ã Ã²Ã¼ 4. Ã‘Ã®Ã°Ã²Ã¨Ã°Ã®Ã¢Ã Ã²Ã¼ 5. Ã”Ã¨Ã«Ã¼Ã²Ã° 0. Ã‚Ã»ÃµÃ®Ã¤\n";
         int choice;
         cin >> choice;
 
@@ -38,14 +63,14 @@ int main() {
         if (choice == 1) {
             string name, type;
             int level;
-            cout << "Íàçâàíèå: "; cin >> name;
-            cout << "Òèï: "; cin >> type;
-            cout << "Óðîâåíü: "; cin >> level;
+            cout << "ÃÃ Ã§Ã¢Ã Ã­Ã¨Ã¥: "; cin >> name;
+            cout << "Ã’Ã¨Ã¯: "; cin >> type;
+            cout << "Ã“Ã°Ã®Ã¢Ã¥Ã­Ã¼: "; cin >> level;
             addItem(name, type, level);
         }
         else if (choice == 2) {
             string name;
-            cout << "Íàçâàíèå äëÿ óäàëåíèÿ: "; cin >> name;
+            cout << "ÃÃ Ã§Ã¢Ã Ã­Ã¨Ã¥ Ã¤Ã«Ã¿ Ã³Ã¤Ã Ã«Ã¥Ã­Ã¨Ã¿: "; cin >> name;
             removeItem(name);
         }
         else if (choice == 3) {
@@ -57,9 +82,10 @@ int main() {
         }
         else if (choice == 5) {
             string type;
-            cout << "Òèï äëÿ ôèëüòðà: "; cin >> type;
+            cout << "Ã’Ã¨Ã¯ Ã¤Ã«Ã¿ Ã´Ã¨Ã«Ã¼Ã²Ã°Ã : "; cin >> type;
             filterByType(type);
         }
     }
     return 0;
+
 }
